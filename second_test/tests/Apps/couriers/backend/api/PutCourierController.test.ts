@@ -20,17 +20,19 @@ describe('PutCourierController', () => {
     const courier = CapacityTrackCourierMother.random();
     await repository.persist(courier);
 
+    const newMaxCapacity = courier.maxCapacity.value + 1;
+
     await request(app)
       .put(`/couriers/${courier.id.value}`)
       .send({
-        max_capacity: courier.maxCapacity.value
+        max_capacity: newMaxCapacity
       })
       .expect(res => {
         expect(res.status).toEqual(httpStatus.OK);
         expect(res.body).toEqual({
           id: courier.id.value,
-          maxCapacity: courier.maxCapacity.value,
-          currentCapacity: courier.maxCapacity.value
+          maxCapacity: newMaxCapacity,
+          currentCapacity: newMaxCapacity
         });
       });
   });
