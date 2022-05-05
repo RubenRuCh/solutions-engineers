@@ -107,12 +107,19 @@ curl -X PATCH http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b108
 }'
 ```
 
-
-
 #### Delete Courier
 ```bash
 curl -X DELETE http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b1087 -H "Content-Type: application/json"
 ```
+
+#### Get Couriers by capacity
+```bash
+curl -X GET http://localhost:3000/couriers/lookup -H "Content-Type: application/json" --data '
+{
+  "capacity_required": 45
+}'
+```
+
 
 ### Tests
 
@@ -148,6 +155,8 @@ make test-e2e
 - [ ] Create a database implementation for the repositories (instead of InMemory). For example, I would have use PostgreSQL or MongoDB
 - [ ] Configure Cucumber or another Gherkin tool to run acceptance tests with business language
 - [ ] Use some library for dependency-injection (to avoid manual and duplicated instantiation of dependencies)
+- [ ] Finish implementing Criteria pattern (limit, etc)
+- [ ] Improve map of Criteria in infraestructure layer
 
 
 * If you have further questions, don't hesitate asking.

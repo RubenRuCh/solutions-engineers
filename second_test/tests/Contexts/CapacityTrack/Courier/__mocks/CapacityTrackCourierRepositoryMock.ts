@@ -1,12 +1,14 @@
 import { CapacityTrackCourier } from '../../../../../src/Contexts/CapacityTrack/Courier/Domain/Model/Entities/CapacityTrackCourier';
 import { CapacityTrackCourierRepository } from '../../../../../src/Contexts/CapacityTrack/Courier/Domain/Model/Interfaces/Repository/CapacityTrackCourierRepository';
 import { CapacityTrackCourierId } from '../../../../../src/Contexts/CapacityTrack/Courier/Domain/ValueObject/CapacityTrackCourierId';
+import { Criteria } from '../../../../../src/Contexts/Shared/Domain/Criteria/Criteria';
 import { Nullable } from '../../../../../src/Contexts/Shared/Domain/Nullable';
 
 export class CapacityTrackCourierRepositoryMock implements CapacityTrackCourierRepository {
   private mockPersist = jest.fn();
   private mockDeleteId = jest.fn();
   private mockGetId = jest.fn();
+  private mockSearchCriteria = jest.fn();
 
   async persist(courier: CapacityTrackCourier): Promise<void> {
     this.mockPersist(courier);
@@ -46,5 +48,17 @@ export class CapacityTrackCourierRepositoryMock implements CapacityTrackCourierR
 
   assertLastGetCourierByIdIs(expected: CapacityTrackCourierId): void {
     expect(this.mockGetId).toHaveBeenCalledWith(expected);
+  }
+
+  async search(criteria: Criteria): Promise<CapacityTrackCourier[]> {
+    return this.mockSearchCriteria(criteria);
+  }
+
+  whenSearchThenReturn(value: CapacityTrackCourier[]): void {
+    this.mockSearchCriteria.mockReturnValue(value);
+  }
+
+  assertLastSearchIs(expected: Criteria): void {
+    expect(this.mockSearchCriteria).toHaveBeenCalledWith(expected);
   }
 }

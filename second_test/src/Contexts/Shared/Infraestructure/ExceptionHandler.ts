@@ -8,6 +8,7 @@ import { CapacityTrackCurrentCourierCapacityCannotExceedMaximumCapacityException
 import { CapacityTrackOperationUnsupportedTypeException } from '../../CapacityTrack/Shared/Domain/Exception/CapacityTrackOperationUnsupportedTypeException';
 import { CapacityTrackPackageVolumeMustBeAboveZeroException } from '../../CapacityTrack/Shared/Domain/Exception/CapacityTrackPackageVolumeMustBeAboveZeroException';
 import { BaseException } from '../Domain/Exception/BaseException';
+import { InvalidArgumentException } from '../Domain/Exception/InvalidArgumentException';
 import { InvalidIdException } from '../Domain/Exception/InvalidIdException';
 import { MissingMandatoryParameterException } from '../Domain/Exception/MissingMandatoryParameterException';
 
@@ -42,6 +43,7 @@ const domainCodeToHttpCode = (exception: BaseException) => {
     case CapacityTrackPackageVolumeMustBeAboveZeroException:
     case CapacityTrackCourierDontHaveEnoughCapacityException:
     case CapacityTrackCurrentCourierCapacityCannotExceedMaximumCapacityException:
+    case InvalidArgumentException:
       return httpStatus.BAD_REQUEST;
 
     default:
