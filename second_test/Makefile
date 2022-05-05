@@ -58,3 +58,11 @@ start-prod-couriers-backend: setProdEnv
 # Clean containers
 clean:
 	@docker-compose down --rmi local --volumes --remove-orphans
+
+# Lint
+lint-check:
+	@docker-compose run --rm --service-ports $(COURIERS_BACKEND_CONTAINER_NAME) npm run lint
+
+lint-fix:
+	@docker-compose run --rm --service-ports $(COURIERS_BACKEND_CONTAINER_NAME) npm run lint:fix
+	@docker-compose run --rm --service-ports $(COURIERS_BACKEND_CONTAINER_NAME) chown -R node:node .
