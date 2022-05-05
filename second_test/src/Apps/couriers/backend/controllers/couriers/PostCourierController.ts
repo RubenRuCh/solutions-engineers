@@ -4,7 +4,9 @@ import { CustomRequest } from '../../../../../Contexts/Shared/Infraestructure/Cu
 import { CapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Domain/Model/Interfaces/Repository/CapacityTrackCourierRepository';
 import { GetCourier } from '../../../../../Contexts/CapacityTrack/Courier/Application/Query/GetCourier/GetCourier';
 import { CreateCourier } from '../../../../../Contexts/CapacityTrack/Courier/Application/Command/CreateCourier/CreateCourier';
-import { InMemoryCapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Infraestructure/Repository/InMemoryCapacityTrackCourierRepository';
+import { MongoCapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Infraestructure/Repository/MongoCapacityTrackCourierRepository';
+import { MongoClientFactory } from '../../../../../Contexts/Shared/Infraestructure/Repository/Mongo/MongoClientFactory';
+import { MongoConfigFactory } from '../../../../../Contexts/CapacityTrack/Shared/Infraestructure/Repository/Mongo/MongoConfigFactory';
 
 export class PostCourierController {
   private courierRepository: CapacityTrackCourierRepository;
@@ -12,7 +14,9 @@ export class PostCourierController {
   private getCourier: GetCourier;
 
   constructor() {
-    this.courierRepository = new InMemoryCapacityTrackCourierRepository();
+    this.courierRepository = new MongoCapacityTrackCourierRepository(
+      MongoClientFactory.createClient('couriers', MongoConfigFactory.createConfig())
+    );
     this.createCourier = new CreateCourier(this.courierRepository);
     this.getCourier = new GetCourier(this.courierRepository);
   }

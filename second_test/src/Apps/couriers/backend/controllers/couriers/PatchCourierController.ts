@@ -4,7 +4,9 @@ import { CustomRequest } from '../../../../../Contexts/Shared/Infraestructure/Cu
 import { CapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Domain/Model/Interfaces/Repository/CapacityTrackCourierRepository';
 import { GetCourier } from '../../../../../Contexts/CapacityTrack/Courier/Application/Query/GetCourier/GetCourier';
 import { UpdateCourierCurrentCapacity } from '../../../../../Contexts/CapacityTrack/Courier/Application/Command/UpdateCourierCurrentCapacity/UpdateCourierCurrentCapacity';
-import { InMemoryCapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Infraestructure/Repository/InMemoryCapacityTrackCourierRepository';
+import { MongoCapacityTrackCourierRepository } from '../../../../../Contexts/CapacityTrack/Courier/Infraestructure/Repository/MongoCapacityTrackCourierRepository';
+import { MongoClientFactory } from '../../../../../Contexts/Shared/Infraestructure/Repository/Mongo/MongoClientFactory';
+import { MongoConfigFactory } from '../../../../../Contexts/CapacityTrack/Shared/Infraestructure/Repository/Mongo/MongoConfigFactory';
 
 export class PatchCourierController {
   private courierRepository: CapacityTrackCourierRepository;
@@ -12,7 +14,9 @@ export class PatchCourierController {
   private getCourier: GetCourier;
 
   constructor() {
-    this.courierRepository = new InMemoryCapacityTrackCourierRepository();
+    this.courierRepository = new MongoCapacityTrackCourierRepository(
+      MongoClientFactory.createClient('couriers', MongoConfigFactory.createConfig())
+    );
     this.updateCourierCurrentCapacity = new UpdateCourierCurrentCapacity(this.courierRepository);
     this.getCourier = new GetCourier(this.courierRepository);
   }

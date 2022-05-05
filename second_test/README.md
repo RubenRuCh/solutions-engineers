@@ -152,7 +152,7 @@ make test-e2e
 
 * If you were to have more time, what would you do? Briefly explain what could be improved.
 
-- [ ] Create a database implementation for the repositories (instead of InMemory). For example, I would have use PostgreSQL or MongoDB
+- [x] Create a database implementation for the repositories (instead of InMemory). For example, I would have use PostgreSQL or MongoDB
 - [ ] Configure Cucumber or another Gherkin tool to run acceptance tests with business language
 - [ ] Use some library for dependency-injection (to avoid manual and duplicated instantiation of dependencies)
 - [ ] Finish implementing Criteria pattern (limit, etc)

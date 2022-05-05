@@ -1,10 +1,13 @@
 import httpStatus from 'http-status';
 import request from 'supertest';
-import { InMemoryCapacityTrackCourierRepository } from '../../../../../src/Contexts/CapacityTrack/Courier/Infraestructure/Repository/InMemoryCapacityTrackCourierRepository';
+import { MongoCapacityTrackCourierRepository } from '../../../../../src/Contexts/CapacityTrack/Courier/Infraestructure/Repository/MongoCapacityTrackCourierRepository';
+import { MongoConfigFactory } from '../../../../../src/Contexts/CapacityTrack/Shared/Infraestructure/Repository/Mongo/MongoConfigFactory';
+import { MongoClientFactory } from '../../../../../src/Contexts/Shared/Infraestructure/Repository/Mongo/MongoClientFactory';
 import { CapacityTrackCourierMother } from '../../../../Contexts/CapacityTrack/Courier/Domain/Model/CapacityTrackCourierMother';
 import app from '../app';
 
-const repository = new InMemoryCapacityTrackCourierRepository();
+const client = MongoClientFactory.createClient('e2e-test-delete-controller', MongoConfigFactory.createConfig());
+const repository = new MongoCapacityTrackCourierRepository(client);
 
 describe('DeleteCourierController', () => {
   beforeEach(async () => {
@@ -13,6 +16,7 @@ describe('DeleteCourierController', () => {
 
   afterAll(async () => {
     await repository.clear();
+    await (await client).close();
     app?.close();
   });
 

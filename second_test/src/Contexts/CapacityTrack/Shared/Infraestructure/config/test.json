@@ -1,0 +1,4 @@
+{
+    "mongo": { "url": "mongodb://mongo:27017/couriers-backend-dev" }
+}
+  
