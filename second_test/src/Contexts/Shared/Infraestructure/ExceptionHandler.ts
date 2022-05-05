@@ -2,7 +2,11 @@ import { Response } from 'express';
 import httpStatus from 'http-status';
 import { CapacityTrackCourierAlreadyExistsException } from '../../CapacityTrack/Courier/Domain/Exception/CapacityTrackCourierAlreadyExistsException';
 import { CapacityTrackCourierCapacityMustBeZeroOrPositiveException } from '../../CapacityTrack/Courier/Domain/Exception/CapacityTrackCourierCapacityMustBeZeroOrPositiveException';
+import { CapacityTrackCourierDontHaveEnoughCapacityException } from '../../CapacityTrack/Courier/Domain/Exception/CapacityTrackCourierDontHaveEnoughCapacityException';
 import { CapacityTrackCourierNotFoundException } from '../../CapacityTrack/Courier/Domain/Exception/CapacityTrackCourierNotFoundException';
+import { CapacityTrackCurrentCourierCapacityCannotExceedMaximumCapacityException } from '../../CapacityTrack/Courier/Domain/Exception/CapacityTrackCurrentCourierCapacityCannotExceedMaximumCapacityException';
+import { CapacityTrackOperationUnsupportedTypeException } from '../../CapacityTrack/Shared/Domain/Exception/CapacityTrackOperationUnsupportedTypeException';
+import { CapacityTrackPackageVolumeMustBeAboveZeroException } from '../../CapacityTrack/Shared/Domain/Exception/CapacityTrackPackageVolumeMustBeAboveZeroException';
 import { BaseException } from '../Domain/Exception/BaseException';
 import { InvalidIdException } from '../Domain/Exception/InvalidIdException';
 import { MissingMandatoryParameterException } from '../Domain/Exception/MissingMandatoryParameterException';
@@ -34,6 +38,10 @@ const domainCodeToHttpCode = (exception: BaseException) => {
     case InvalidIdException:
     case CapacityTrackCourierCapacityMustBeZeroOrPositiveException:
     case CapacityTrackCourierAlreadyExistsException:
+    case CapacityTrackOperationUnsupportedTypeException:
+    case CapacityTrackPackageVolumeMustBeAboveZeroException:
+    case CapacityTrackCourierDontHaveEnoughCapacityException:
+    case CapacityTrackCurrentCourierCapacityCannotExceedMaximumCapacityException:
       return httpStatus.BAD_REQUEST;
 
     default:

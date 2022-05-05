@@ -20,10 +20,9 @@ export class CapacityTrackCourierMother {
   }
 
   static withCapacity(
-    courier: CapacityTrackCourier,
     maxCapacity: CapacityTrackCourierCapacity,
     currentCapacity: CapacityTrackCourierCapacity
   ): CapacityTrackCourier {
-    return this.create(courier.id, maxCapacity, currentCapacity);
+    return this.create(CapacityTrackCourierIdMother.random(), maxCapacity, currentCapacity);
   }
 }

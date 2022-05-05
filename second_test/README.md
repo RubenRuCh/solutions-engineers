@@ -71,6 +71,49 @@ make start-local-couriers-backend
 
 By default it will be available in http://localhost:3000 (it can be changed editing the `.env` files)
 
+
+#### Create Courier
+```bash
+curl -X POST http://localhost:3000/couriers -H "Content-Type: application/json" --data '
+{
+  "id": "3314b91d-d91f-4e54-a6b3-ef80196b1087",
+  "max_capacity": 45
+}'
+```
+
+#### Update Courier max capacity
+```bash
+curl -X PUT http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b1087 -H "Content-Type: application/json" --data '
+{
+  "max_capacity": 60
+}'
+```
+
+#### Update Courier current capacity (doing a pickup)
+```bash
+curl -X PATCH http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b1087 -H "Content-Type: application/json" --data '
+{
+  "operationType": "pickup",
+  "packageVolume": 10
+}'
+```
+
+#### Update Courier current capacity (doing a delivery)
+```bash
+curl -X PATCH http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b1087 -H "Content-Type: application/json" --data '
+{
+  "operationType": "delivery",
+  "packageVolume": 10
+}'
+```
+
+
+
+#### Delete Courier
+```bash
+curl -X DELETE http://localhost:3000/couriers/3314b91d-d91f-4e54-a6b3-ef80196b1087 -H "Content-Type: application/json"
+```
+
 ### Tests
 
 Run all tests
@@ -90,5 +133,21 @@ make test-e2e
 
 
 * Show off! We love Typescript. We love TDD. We love unit tests. We love design patterns. We love engineering!
+
+#### Showing off!
+
+- [x] TypeScript
+- [x] TDD
+- [x] Unit tests
+- [x] E2E tests
+- [x] Hexagonal Architecture
+- [x] DDD
+
 * If you were to have more time, what would you do? Briefly explain what could be improved.
+
+- [ ] Create a database implementation for the repositories (instead of InMemory). For example, I would have use PostgreSQL or MongoDB
+- [ ] Configure Cucumber or another Gherkin tool to run acceptance tests with business language
+- [ ] Use some library for dependency-injection (to avoid manual and duplicated instantiation of dependencies)
+
+
 * If you have further questions, don't hesitate asking.
