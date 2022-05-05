@@ -1,4 +1,5 @@
 import { Nullable } from '../../../../Shared/Domain/Nullable';
+import { CapacityTrackCourierNotFoundException } from '../../Domain/Exception/CapacityTrackCourierNotFoundException';
 import { CapacityTrackCourier } from '../../Domain/Model/Entities/CapacityTrackCourier';
 import { CapacityTrackCourierRepository } from '../../Domain/Model/Interfaces/Repository/CapacityTrackCourierRepository';
 import { CapacityTrackCourierId } from '../../Domain/ValueObject/CapacityTrackCourierId';
@@ -18,6 +19,20 @@ export class InMemoryCapacityTrackCourierRepository implements CapacityTrackCour
     const index = currentCouriers.findIndex(courier => courier.id.isEqual(courierToSave.id));
     currentCouriers[index] = courierToSave;
 
+    InMemoryCapacityTrackCourierRepository.couriers = currentCouriers;
+  }
+
+  public async delete(courierId: CapacityTrackCourierId): Promise<void> {
+    const searchedCourier = await this.getById(courierId);
+
+    if (!searchedCourier) {
+      throw new CapacityTrackCourierNotFoundException(courierId.value);
+    }
+
+    const currentCouriers = [...InMemoryCapacityTrackCourierRepository.couriers];
+    const index = currentCouriers.findIndex(courier => courier.id.isEqual(courierId));
+
+    currentCouriers.splice(index, 1);
     InMemoryCapacityTrackCourierRepository.couriers = currentCouriers;
   }
 

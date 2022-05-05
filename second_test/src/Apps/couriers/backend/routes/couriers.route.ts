@@ -1,11 +1,13 @@
 import express, { Express, Router } from 'express';
 import { AsyncHandler } from '../../../../Contexts/Shared/Infraestructure/AsyncHandler';
+import { DeleteCourierController } from '../controllers/couriers/DeleteCourierController';
 import { PostCourierController } from '../controllers/couriers/PostCourierController';
 import { PutCourierController } from '../controllers/couriers/PutCourierController';
 
 enum CouriersEndpoints {
   PostOne = '/',
-  PutOne = '/:courierId'
+  PutOne = '/:courierId',
+  DeleteOne = '/:courierId'
 }
 
 const router: Router = express.Router();
@@ -18,6 +20,11 @@ router.post(
 router.put(
   CouriersEndpoints.PutOne,
   AsyncHandler((req: Request, res: Response) => new PutCourierController().run(req, res))
+);
+
+router.delete(
+  CouriersEndpoints.DeleteOne,
+  AsyncHandler((req: Request, res: Response) => new DeleteCourierController().run(req, res))
 );
 
 export const register = (app: Express) => {

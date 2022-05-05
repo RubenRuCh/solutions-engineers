@@ -5,6 +5,7 @@ import { Nullable } from '../../../../../src/Contexts/Shared/Domain/Nullable';
 
 export class CapacityTrackCourierRepositoryMock implements CapacityTrackCourierRepository {
   private mockPersist = jest.fn();
+  private mockDeleteId = jest.fn();
   private mockGetId = jest.fn();
 
   async persist(courier: CapacityTrackCourier): Promise<void> {
@@ -21,6 +22,18 @@ export class CapacityTrackCourierRepositoryMock implements CapacityTrackCourierR
 
   assertPersistCourierHasNotBeenCalled(): void {
     expect(this.mockPersist).not.toHaveBeenCalled();
+  }
+
+  async delete(courierId: CapacityTrackCourierId): Promise<void> {
+    this.mockDeleteId(courierId);
+  }
+
+  assertLastDeletedCourierIdIs(expected: CapacityTrackCourierId): void {
+    const mock = this.mockDeleteId.mock;
+    const lastDeletedCourierId = mock.calls[mock.calls.length - 1][0] as CapacityTrackCourierId;
+
+    expect(lastDeletedCourierId).toBeInstanceOf(CapacityTrackCourierId);
+    expect(lastDeletedCourierId.value).toEqual(expected.value);
   }
 
   async getById(id: CapacityTrackCourierId): Promise<Nullable<CapacityTrackCourier>> {
