@@ -16,4 +16,12 @@ export class CapacityTrackCourierCapacity extends NumberValueObject {
   private isValid(value: number): boolean {
     return value >= 0;
   }
+
+  public increment(valueToIncrement: number): CapacityTrackCourierCapacity {
+    return new CapacityTrackCourierCapacity(this.value + valueToIncrement);
+  }
+
+  public decrement(valueToDecrement: number): CapacityTrackCourierCapacity {
+    return new CapacityTrackCourierCapacity(this.value - valueToDecrement);
+  }
 }

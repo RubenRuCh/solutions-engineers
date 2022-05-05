@@ -52,4 +52,32 @@ export class CapacityTrackCourier extends AggregateRoot {
       currentCapacity: this.currentCapacity.value
     };
   }
+
+  public update({ newMaxCapacity }: { newMaxCapacity: CapacityTrackCourierCapacity }): CapacityTrackCourier {
+    const isDeliveringSomething = this.isDeliveringSomething();
+    const oldMaxCapacity = this.maxCapacity;
+    this._maxCapacity = newMaxCapacity;
+
+    if (!isDeliveringSomething) {
+      this._currentCapacity = newMaxCapacity;
+
+      return this;
+    }
+
+    const isDecreasingCapacity = newMaxCapacity.isSmallerThan(oldMaxCapacity);
+
+    if (isDecreasingCapacity) {
+      this._currentCapacity = this.currentCapacity.decrement(newMaxCapacity.value);
+
+      return this;
+    }
+
+    this._currentCapacity = newMaxCapacity.decrement(this.currentCapacity.value);
+
+    return this;
+  }
+
+  private isDeliveringSomething(): boolean {
+    return this.currentCapacity.isSmallerThan(this.maxCapacity);
+  }
 }
