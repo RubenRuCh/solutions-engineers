@@ -1,0 +1,24 @@
+version: "3"
+
+x-app-service: &default-app
+  build: .
+  command: ''
+
+  volumes:
+    - .:/code:delegated
+    - node_modules:/code/node_modules:delegated
+
+services:
+  app:
+    <<: *default-app
+
+  couriers_backend:
+    <<: *default-app
+    command: bash -c "npm run build && npm run start:couriers:backend"
+    ports:
+      - ${COURIERS_BACK_PORT}:${COURIERS_BACK_PORT}
+
+volumes:
+  node_modules:
+  esdata:
+    driver: local

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+      "rootDir": ".",
+      "outDir": "../../../../dist/Apps/couriers/backend",
+      "composite": true,
+
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "strict": true,
+      "noEmit": false,
+      "resolveJsonModule": true,
+      "noUnusedLocals": true,
+    },
+    "include": [
+      "src/**/**.ts"
+    ],
+    "extends": "../../../../tsconfig.json",
+    "exclude": ["node_modules"],
+    "references": [
+      { "path": "../../../Contexts" }
+    ]
+}

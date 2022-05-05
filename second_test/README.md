@@ -47,6 +47,48 @@ In case you are feeling going deeper, here are some proposed bonus goals. Pick a
 
 ## Notes
 * How do we run this API? Please provide the right amount of documentation in any format you prefer.
+
+### Build Docker image
+```
+make build
+```
+
+### OPTIONAL. Install dependencies (to have dependencies in local and get types in the IDE)
+```
+npm install
+```
+
+### Install dependencies (to execute tests && run the app)
+```
+make install
+```
+
+
+### Run Backend
+```
+make start-local-couriers-backend
+```
+
+By default it will be available in http://localhost:3000 (it can be changed editing the `.env` files)
+
+### Tests
+
+Run all tests
+```
+make test
+```
+
+Run unit tests
+```
+make test-unit
+```
+
+Run E2E tests
+```
+make test-e2e
+```
+
+
 * Show off! We love Typescript. We love TDD. We love unit tests. We love design patterns. We love engineering!
 * If you were to have more time, what would you do? Briefly explain what could be improved.
 * If you have further questions, don't hesitate asking.
